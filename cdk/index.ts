@@ -6,17 +6,12 @@ const app = new App();
 const stack = new Stack(app, 'DevelopmentStack');
 
 const cfnEnvironmentEC2 = new cloud9.CfnEnvironmentEC2(stack, 'MyCfnEnvironmentEC2', {
-  instanceType: 't2.micro',
+  instanceType: stack.node.tryGetContext('instanceType'),
 
   // the properties below are optional
   automaticStopTimeMinutes: 30,
-  connectionType: 'CONNECT_SSM',
   description: 'Developer coding environment',
-  name: 'dev',
-  tags: [{
-    key: 'key',
-    value: 'value',
-  }],
+  name: stack.node.tryGetContext('name'),
 });
 
 app.synth();

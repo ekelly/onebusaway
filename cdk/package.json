@@ -3,16 +3,17 @@
   "description": "Scripts to initialize the AWS infrastructure for OneBusAway",
   "scripts": {
     "deps": "npm install",
-    "build": "npx ts-node --prefer-ts-exts index.ts",
+    "build": "npx aws-cdk synth",
     "deploy": "npx aws-cdk deploy DevelopmentStack"
   },
   "devDependencies": {
-    "typescript": "^4.6.4"
+    "typescript": "^4.6.4",
+    "aws-cdk": "^2.23.0"
   },
   "dependencies": {
     "@aws-cdk/aws-cloud9": "^1.155.0",
     "@aws-cdk/core": "^1.155.0",
-    "aws-cdk-lib": "^2.15.0",
+    "aws-cdk-lib": "^2.23.0",
     "constructs": "^10.0.84",
     "ts-node": "^10.7.0"
   }
