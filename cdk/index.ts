@@ -28,7 +28,7 @@ class DevelopmentStack extends Stack {
     
     // Make the developer user if they do not already exist.
     const developerUsername = this.node.tryGetContext('developerUsername');
-    var user = iam.User.fromUserName(this, 'MyImportedUserByName', developerUsername);
+    var user = iam.User.fromUserName(this, 'developer', developerUsername);
     if (!user) {
       const randomPassword = uuidv4();
       const user = new iam.User(this, 'developer', {
