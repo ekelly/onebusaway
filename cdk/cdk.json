@@ -1,7 +1,8 @@
 {
   "context": {
     "name": "cloud9",
-    "instanceType": "t3.micro"
+    "instanceType": "t3.micro",
+    "developerUsername": "eric"
   },
   "app": "npx ts-node --prefer-ts-exts index.ts"
 }
