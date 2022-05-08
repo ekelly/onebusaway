@@ -12,3 +12,4 @@ To get started:
 8. run ./cloud9-setup.sh
 9. Add ~/.ssh/id_rsa.pub contents to Github settings as an accepted key
 
+From here on, all development should occur in the AWS account, via the Cloud9 IDE
