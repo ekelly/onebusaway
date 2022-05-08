@@ -4,4 +4,3 @@ cdk/node_modules/
 cdk/index.js
 cdk/package-lock.json
 cdk/cdk.out/
-cdk/cdk.context.json
