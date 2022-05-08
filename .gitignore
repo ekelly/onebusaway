@@ -1,0 +1,6 @@
+
+# CDK
+cdk/node_modules/
+cdk/index.js
+cdk/package-lock.json
+cdk/cdk.out/

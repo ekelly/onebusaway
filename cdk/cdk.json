@@ -1,0 +1,8 @@
+{
+  "context": {
+    "name": "cloud9",
+    "instance_type": "t2.micro"
+  },
+  "app": "npx ts-node --prefer-ts-exts index.ts"
+}
+
