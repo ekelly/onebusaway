@@ -25,13 +25,28 @@ class DevelopmentStack extends Stack {
         iam.ManagedPolicy.fromAwsManagedPolicyName('IAMUserChangePassword'),
       ]
     });
-    const randomPassword = uuidv4();
-    const user = new iam.User(this, 'developer', {
-      userName: this.node.tryGetContext('developerUsername'),
-      password: SecretValue.unsafePlainText(randomPassword),
-      passwordResetRequired: true,
-      groups: [developersGroup]
-    });
+    
+    // Make the developer user if they do not already exist.
+    const developerUsername = this.node.tryGetContext('developerUsername');
+    var user = iam.User.fromUserName(this, 'MyImportedUserByName', developerUsername);
+    if (!user) {
+      const randomPassword = uuidv4();
+      const user = new iam.User(this, 'developer', {
+        userName: developerUsername,
+        password: SecretValue.unsafePlainText(randomPassword),
+        passwordResetRequired: true,
+        groups: [developersGroup]
+      });
+
+      new CfnOutput(this, 'Developer username', {
+        value: user.userName,
+        description: "Developer account's username"
+      });
+      new CfnOutput(this, 'Developer password', {
+        value: randomPassword,
+        description: "Developer account's password"
+      });
+    }
     const admin = iam.User.fromUserName(this, 'MyImportedUserByName', 'admin');
 
     // Resources
@@ -44,15 +59,6 @@ class DevelopmentStack extends Stack {
       automaticStopTimeMinutes: 30,
       ownerArn: user.userArn,
       tags: [],
-    });
-
-    new CfnOutput(this, 'Developer username', {
-      value: user.userName,
-      description: "Developer account's username"
-    });
-    new CfnOutput(this, 'Developer password', {
-      value: randomPassword,
-      description: "Developer account's password"
     });
   }
 }
