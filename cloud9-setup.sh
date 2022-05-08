@@ -1,5 +1,9 @@
 #!/bin/bash
 
+USER=$(aws sts get-caller-identity --query "Arn" --output text | cut -d "/" -f 2)
+
+git config --global user.name $USER
+git config --global user.email onebusaway-$USER@useric.com
 git config --global core.editor vim
 ssh-keygen
 
