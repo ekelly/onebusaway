@@ -11,3 +11,4 @@ To get started:
 7. git clone https://github.com/ekelly/onebusaway.git
 8. run ./cloud9-setup.sh
 9. Edit git user and email address (TODO - can this be set automatically through IAM?)
+10. Add ~/.ssh/id_rsa.pub contents to Github settings as an accepted key
