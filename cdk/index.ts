@@ -4,7 +4,6 @@ import { Stack,
          StackProps,
          App, 
          CfnOutput,
-         SecretValue,
          aws_ec2 as ec2, 
          aws_cloud9 as cloud9, 
          aws_secretsmanager as secretsmanager,
@@ -30,10 +29,9 @@ class DevelopmentStack extends Stack {
     // Make the developer user
     const developerUsername = this.node.tryGetContext('developerUsername');
     const user = this.createDeveloperResources('developer', developerUsername, developersGroup);
-    developersGroup.addUser(user);
 
     // Get a reference to the Admin user
-    const admin = iam.User.fromUserName(this, 'MyImportedUserByName', 'admin');
+    const admin = iam.User.fromUserName(this, 'AdminUser', 'admin');
 
     // General Resources
     const c9env = new cloud9.CfnEnvironmentEC2(this, 'AdminCloud9EC2Environment', {
@@ -54,6 +52,7 @@ class DevelopmentStack extends Stack {
   createDeveloperResources(id: string, username: string, developerGroup: iam.Group) {
     // Fetch the user and make sure it is in the correct group
     const user = iam.User.fromUserName(this, id, username);
+    developerGroup.addUser(user);
 
     // Create the resources for the developer
     const c9env = new cloud9.CfnEnvironmentEC2(this, id+'Cloud9EC2Environment', {
