@@ -7,6 +7,8 @@ import { Stack,
          aws_ec2 as ec2, 
          aws_cloud9 as cloud9, 
          aws_secretsmanager as secretsmanager,
+         aws_codepipeline as codepipeline,
+         aws_codepipeline_actions as cp_actions,
          aws_iam as iam } from 'aws-cdk-lib';
 import * as c9 from "@aws-cdk/aws-cloud9-alpha";
 
@@ -48,6 +50,29 @@ class DevelopmentStack extends Stack {
       }],
     });
   }
+  
+  // Code Pipeline
+  const sourceAction = new cp_actions.GitHubSourceAction({
+    actionName: 'GitHub_Source',
+    owner: 'awslabs',
+    repo: 'aws-cdk',
+    oauthToken: process.env.GITHUB_OAUTH_TOKEN,
+    output: sourceOutput,
+    branch: 'master', // default: 'master'
+  });
+  const pipeline = new codepipeline.Pipeline(this, 'OneBusAwayPipeline', {
+    pipelineName: 'OneBusAway Pipeline',
+    crossAccountKeys: false,
+    stages: [
+      {
+        stageName: 'Source',
+        actions: [
+          this.sourceAction
+        ],
+      },
+    ],
+  });
+  
 
   createDeveloperResources(id: string, username: string, developerGroup: iam.Group) {
     // Fetch the user and make sure it is in the correct group
