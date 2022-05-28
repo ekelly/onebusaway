@@ -4,7 +4,9 @@
   "scripts": {
     "deps": "npm install",
     "build": "npx aws-cdk synth",
-    "deploy": "npx aws-cdk deploy DevelopmentStack"
+    "deploy": "npx aws-cdk deploy --all",
+    "deployDev": "npx aws-cdk deploy DevelopmentStack",
+    "deployPipeline": "npx aws-cdk deploy PipelineStack"
   },
   "devDependencies": {
     "@types/uuid": "^8.3.4",
