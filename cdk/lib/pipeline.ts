@@ -3,6 +3,7 @@
 import {
   Stack,
   StackProps,
+  SecretValue,
 } from "aws-cdk-lib";
 import { Construct } from 'constructs';
 import { CodePipeline, CodePipelineSource, ShellStep } from 'aws-cdk-lib/pipelines';
@@ -19,13 +20,19 @@ export class PipelineStack extends Stack {
     //   output: sourceOutput,
     //   branch: "master", // default: 'master'
     // });
+
     const pipeline = new CodePipeline(this, "OneBusAwayPipeline", {
       pipelineName: "OneBusAway-Pipeline",
       crossAccountKeys: false,
       synth: new ShellStep('Synth', {
-        input: CodePipelineSource.gitHub("ekelly/onebusaway", 'main'),
+        input: CodePipelineSource.gitHub("ekelly/onebusaway", 'main', {
+          authentication: SecretValue.secretsManager("prod/repository/apikey", {
+            jsonField: "github-token"
+          })
+        }),
         commands: ['cd cdk', 'npm ci', 'npm run build', 'npm run deploy', 'cd ..']
       }),
+
       // stages: [
       //   {
       //     stageName: "Source",
