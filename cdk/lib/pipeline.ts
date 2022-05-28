@@ -3,14 +3,12 @@
 import {
   Stack,
   StackProps,
-  App,
-  aws_codepipeline as cp,
-  aws_codepipeline_actions as cp_actions,
 } from "aws-cdk-lib";
-import * as c9 from "@aws-cdk/aws-cloud9-alpha";
+import { Construct } from 'constructs';
+import { CodePipeline, CodePipelineSource, ShellStep } from 'aws-cdk-lib/pipelines';
 
 export class PipelineStack extends Stack {
-  constructor(scope: App, id: string, props?: StackProps) {
+  constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
 
     // const sourceAction = new cp_actions.GitHubSourceAction({
@@ -21,12 +19,11 @@ export class PipelineStack extends Stack {
     //   output: sourceOutput,
     //   branch: "master", // default: 'master'
     // });
-    const repoName = this.node.tryGetContext('githubRepoName');
-    const pipeline = new cp.Pipeline(this, "OneBusAwayPipeline", {
-      pipelineName: "OneBusAway Pipeline",
+    const pipeline = new CodePipeline(this, "OneBusAwayPipeline", {
+      pipelineName: "OneBusAway-Pipeline",
       crossAccountKeys: false,
-      synth: new cp.ShellStep('Synth', {
-        input: cp.CodePipelineSource.gitHub(repoName, 'main'),
+      synth: new ShellStep('Synth', {
+        input: CodePipelineSource.gitHub("ekelly/onebusaway", 'main'),
         commands: ['cd cdk', 'npm ci', 'npm run build', 'npm run deploy', 'cd ..']
       }),
       // stages: [
