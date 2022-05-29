@@ -4,8 +4,8 @@
   "scripts": {
     "deps": "npm install",
     "build": "npx aws-cdk synth",
-    "deploy": "npx aws-cdk deploy",
-    "deployAll": "npx aws-cdk deploy --all",
+    "deploy": "npx aws-cdk deploy --all",
+    "deployAll": "npx aws-cdk deploy",
     "deployDev": "npx aws-cdk deploy DevelopmentStack",
     "deployPipeline": "npx aws-cdk deploy PipelineStack"
   },
