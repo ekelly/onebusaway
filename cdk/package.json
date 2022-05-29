@@ -4,7 +4,8 @@
   "scripts": {
     "deps": "npm install",
     "build": "npx aws-cdk synth",
-    "deploy": "npx aws-cdk deploy --all",
+    "deploy": "npx aws-cdk deploy",
+    "deployAll": "npx aws-cdk deploy --all",
     "deployDev": "npx aws-cdk deploy DevelopmentStack",
     "deployPipeline": "npx aws-cdk deploy PipelineStack"
   },
@@ -18,6 +19,7 @@
     "@aws-cdk/aws-cloud9-alpha": "^2.23.0-alpha.0",
     "@aws-cdk/core": "^1.155.0",
     "@types/node": "^17.0.35",
+    "aws-cdk-billing-alarm": "^1.1.0",
     "aws-cdk-lib": "^2.23.0",
     "constructs": "^10.0.84",
     "ts-node": "^10.7.0",
