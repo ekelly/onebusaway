@@ -2,7 +2,8 @@
   "context": {
     "name": "cloud9",
     "instanceType": "t3.micro",
-    "developerUsername": "eric"
+    "developerUsername": "eric",
+    "@aws-cdk/core:newStyleStackSynthesis": "true"
   },
   "app": "npx ts-node --prefer-ts-exts index.ts"
 }
