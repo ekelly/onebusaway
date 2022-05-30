@@ -30,6 +30,7 @@ export class PipelineStack extends Stack {
             jsonField: "github-token"
           })
         }),
+        primaryOutputDirectory: 'cdk/cdk.out',
         commands: ['cd cdk', 'npm ci', 'npm run build', 'cd ..']
       }),
 
