@@ -30,7 +30,7 @@ export class PipelineStack extends Stack {
             jsonField: "github-token"
           })
         }),
-        commands: ['cd cdk', 'npm ci', 'npm run build', 'npm run deployAll', 'cd ..']
+        commands: ['cd cdk', 'npm ci', 'npm run build', 'npm run deploy', 'cd ..']
       }),
 
       // stages: [
