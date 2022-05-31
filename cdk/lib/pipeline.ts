@@ -6,7 +6,8 @@ import {
   SecretValue,
 } from "aws-cdk-lib";
 import { Construct } from 'constructs';
-import { CodePipeline, CodePipelineSource, ShellStep } from 'aws-cdk-lib/pipelines';
+import { CodePipeline, CodePipelineSource, ShellStep, ManualApprovalStep } from 'aws-cdk-lib/pipelines';
+import { PipelineSkillStage } from "./pipeline-skill-stage";
 
 export class PipelineStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
@@ -20,6 +21,8 @@ export class PipelineStack extends Stack {
     //   output: sourceOutput,
     //   branch: "master", // default: 'master'
     // });
+    
+    const skillStage = new PipelineSkillStage(this, "PipelineSkillStage");
 
     const pipeline = new CodePipeline(this, "OneBusAwayPipeline", {
       pipelineName: "OneBusAway-Pipeline",
@@ -41,5 +44,7 @@ export class PipelineStack extends Stack {
       //   },
       // ],
     });
+    
+    pipeline.addStage(skillStage);
   }
 }

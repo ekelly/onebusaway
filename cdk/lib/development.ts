@@ -40,6 +40,10 @@ export class DevelopmentStack extends Stack {
         "key": "user",
         "value": admin.userName
       }],
+      repositories: [{
+        pathComponent: 'onebusaway',
+        repositoryUrl: 'https://github.com/ekelly/onebusaway.git',
+      }]
     });
   }
 
@@ -61,6 +65,10 @@ export class DevelopmentStack extends Stack {
         "key": "user",
         "value": user.userName
       }],
+      repositories: [{
+        pathComponent: 'onebusaway',
+        repositoryUrl: 'https://github.com/ekelly/onebusaway.git',
+      }]
     });
     return user;
   }
