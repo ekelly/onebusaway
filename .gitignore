@@ -3,3 +3,7 @@
 cdk/node_modules/
 cdk/index.js
 cdk/cdk.out/
+
+# Skill
+skill/node_modules/
+skill/dist/
