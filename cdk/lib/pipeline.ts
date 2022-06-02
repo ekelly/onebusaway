@@ -13,12 +13,15 @@ export class PipelineStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
     
-    const skillStage = new PipelineSkillStage(this, "PipelineSkillStage");
     const source = CodePipelineSource.gitHub("ekelly/onebusaway", 'main', {
       authentication: SecretValue.secretsManager("prod/repository/apikey", {
         jsonField: "github-token"
       })
     });
+    
+    const buildSkill: string[] = ['cd skill', 'npm run build', 'cd ..'];
+    const buildCDK: string[] = ['cd cdk', 'npm ci', 'npm run build', 'cd ..'];
+    const buildCommands: string[] = [...buildSkill, ...buildCDK];
 
     const pipeline = new CodePipeline(this, "OneBusAwayPipeline", {
       pipelineName: "OneBusAway-Pipeline",
@@ -26,11 +29,11 @@ export class PipelineStack extends Stack {
       synth: new ShellStep('Synth', {
         input: source,
         primaryOutputDirectory: 'cdk/cdk.out',
-        commands: ['cd cdk', 'npm ci', 'npm run build', 'cd ..']
+        commands: buildCommands
       })
     });
     
-    const stage = pipeline.addStage(skillStage);
+    const stage = pipeline.addStage(new PipelineSkillStage(this, "PipelineSkillStage"));
     stage.addPost(new ShellStep('validate', {
       input: source,
       commands: ['sh ./skill/tst/validate.sh']
