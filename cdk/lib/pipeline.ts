@@ -18,10 +18,6 @@ export class PipelineStack extends Stack {
         jsonField: "github-token"
       })
     });
-    
-    const buildSkill: string[] = ['cd skill', 'npm run build', 'cd ..'];
-    const buildCDK: string[] = ['cd cdk', 'npm ci', 'npm run build', 'cd ..'];
-    const buildCommands: string[] = [...buildSkill, ...buildCDK];
 
     const pipeline = new CodePipeline(this, "OneBusAwayPipeline", {
       pipelineName: "OneBusAway-Pipeline",
@@ -29,7 +25,7 @@ export class PipelineStack extends Stack {
       synth: new ShellStep('Synth', {
         input: source,
         primaryOutputDirectory: 'cdk/cdk.out',
-        commands: buildCommands
+        commands: ['cd cdk', 'npm ci', 'npm run build', 'cd ..']
       })
     });
     
